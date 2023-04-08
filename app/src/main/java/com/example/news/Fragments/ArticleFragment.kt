@@ -1,0 +1,51 @@
+package com.example.news.Fragments
+
+import android.os.Bundle
+import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.webkit.WebViewClient
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.navArgs
+import com.example.news.Activities.MainActivity
+import com.example.news.DataModel.Article
+import com.example.news.R
+import com.example.news.UI.NewsViewModel
+import com.example.news.databinding.FragmentArticleBinding
+private const val TAG="TEJAS"
+class ArticleFragment : Fragment() {
+
+    private lateinit var args: NavArgs
+
+
+     private var _binding: FragmentArticleBinding?=null
+     private val binding get()=_binding!!
+     private lateinit var viewModel: NewsViewModel
+     private var article: Article?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.w("TEJAS", "onCreate ArticleFragment")
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Log.w(TAG, "Article Fragment Reached")
+        viewModel=(activity as MainActivity).viewModel
+        Log.w(TAG, "viewModel Done")
+        _binding=FragmentArticleBinding.inflate(inflater, container, false)
+        Log.w(TAG, "binding done")
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        article=viewModel.currentArticle
+        binding.webView.loadUrl(article!!.url)
+    }
+}

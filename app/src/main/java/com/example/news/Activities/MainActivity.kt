@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.news.Database.ArticleDatabase
+import com.example.news.Fragments.ArticleFragment
 import com.example.news.Fragments.BreakingNewsFragment
 import com.example.news.Fragments.SavedNewsFragment
 import com.example.news.Fragments.SearchNewsFragment
@@ -49,11 +50,15 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun setCurrentFragment(fragment: Fragment) =
+     private fun setCurrentFragment(fragment: Fragment) =
         this.supportFragmentManager?.beginTransaction()?.apply {
             replace(R.id.frameLayout, fragment)
                 commit()
         }
 
+    public fun moveToArticleFragment(){
+        val articleF=ArticleFragment()
+        setCurrentFragment(articleF)
+    }
 
 }
