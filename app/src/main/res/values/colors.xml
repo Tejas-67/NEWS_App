@@ -7,4 +7,13 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="jet_black">#323031</color>
+    <color name="silver_but_not_silver">#C1BDB3</color>
+    <color name="slate_gray">#6C6F7F</color>
+    <color name="blue_violet">#3A86FF</color>
+    <color name="snow">#FFFBFF</color>
+    <color name="faded_blue">#658CBB</color>
+
+
+
 </resources>

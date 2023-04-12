@@ -61,13 +61,14 @@ class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapte
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article: Article = differ.currentList[position]
 
-        holder.itemView.apply {
+        //holder.itemView.apply {
             Glide.with(holder.itemView.context).load(article.urlToImage).into(holder.image)
-            holder.source.text = article.source.name
+            if(article.author!=null) holder.source.text = "By ${article.author}."
+            else holder.source.text= "By unknown."
             holder.title.text = article.title
             holder.desc.text = article.description
             holder.publishedAt.text = article.publishedAt
-        }
+        //}
 
         holder.itemView.setOnClickListener {
             Log.w("TEJAS", "Item Clicked")

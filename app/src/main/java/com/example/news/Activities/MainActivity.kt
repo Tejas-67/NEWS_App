@@ -17,7 +17,7 @@ import com.example.news.UI.NewsViewModelProviderFactory
 import com.example.news.databinding.ActivityMainBinding
 import com.google.android.material.navigation.NavigationBarView
 
-//a7049628798b4fe2875ca95af30922d3 api key
+
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding?=null
     private val binding get()=_binding!!
@@ -25,10 +25,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Log.w("TEJAS", "MainActivity")
-
+        supportActionBar?.hide()
         _binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val bnf=BreakingNewsFragment()
         val snf=SearchNewsFragment()
         val sanf=SavedNewsFragment()
@@ -43,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val repo = NewsRepository(ArticleDatabase(this))
+        val repo = NewsRepository(ArticleDatabase.getDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(repo)
         viewModel=ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 

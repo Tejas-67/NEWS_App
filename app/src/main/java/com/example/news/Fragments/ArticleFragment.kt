@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.WebViewClient
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
@@ -47,5 +48,14 @@ class ArticleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         article=viewModel.currentArticle
         binding.webView.loadUrl(article!!.url)
+
+        binding.fab.setOnClickListener{
+            if(article==null) Toast.makeText(requireContext(), "Couldn't Save News!!", Toast.LENGTH_SHORT).show()
+            else {
+                viewModel.addToLocalDataBase(article!!)
+                Toast.makeText(requireContext(), "News Saved Succesfully", Toast.LENGTH_SHORT).show()
+                Log.w(TAG, "Added Successfully to Room")
+            }
+        }
     }
 }
