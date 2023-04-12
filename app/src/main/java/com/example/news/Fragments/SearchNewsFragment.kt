@@ -117,7 +117,7 @@ class SearchNewsFragment : Fragment(), ItemClickListener {
     }
 
     override fun onItemClick(view: View, article: Article) {
-        val action=SearchNewsFragmentDirections.actionSearchNewsFragmentToArticleFragment()
-        findNavController().navigate(action)
+        viewModel.setArticle(article)
+        (activity as MainActivity).moveToArticleFragment()
     }
 }

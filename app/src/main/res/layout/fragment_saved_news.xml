@@ -10,7 +10,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Saved News"
+        android:text="@string/saved_news"
         android:padding="4sp"
         android:textFontWeight="500"
         android:fontFamily="sans-serif-smallcaps"

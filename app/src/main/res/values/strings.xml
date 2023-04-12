@@ -2,4 +2,15 @@
     <string name="app_name">NEWS</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_news">Search news...</string>
+    <string name="search_news_tv">Search News</string>
+    <string name="breaking_news">Breaking News</string>
+    <string name="all">All</string>
+    <string name="business">Business</string>
+    <string name="entertainment">Entertainment</string>
+    <string name="health">Health</string>
+    <string name="science">Science</string>
+    <string name="sports">Sports</string>
+    <string name="technology">Technology</string>
+    <string name="saved_news">Saved News</string>
 </resources>

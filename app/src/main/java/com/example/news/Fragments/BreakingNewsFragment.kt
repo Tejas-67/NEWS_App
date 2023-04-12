@@ -216,7 +216,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //ENTERTAINMENT
         binding.entertainment.setOnClickListener {
-            binding.entertainment.setChipBackgroundColorResource(R.color.faded_blue)
+            //binding.entertainment.setChipBackgroundColorResource(R.color.faded_blue)
             viewModel.entertainmentNews.observe(viewLifecycleOwner, Observer {
                 response->
                 when(response){
