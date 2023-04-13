@@ -44,11 +44,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.w("TEJAS", "Breaking News Fragment")
         _binding=FragmentBreakingNewsBinding.inflate(inflater, container, false)
-        Log.w("TEJAS", "vm")
-
-        Log.w("TEJAS", "1")
         listener=this
         return binding.root
     }
@@ -280,10 +276,6 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
 
     override fun onItemClick(view: View, article: Article) {
-
-        Log.w("TEJAS", "Click Received BreakingNews")
-//        val action=BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment()
-        Log.w("TEJAS", "action initialised")
         viewModel.setArticle(article)
         (activity as MainActivity).moveToArticleFragment()
     }

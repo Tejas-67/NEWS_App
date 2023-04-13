@@ -54,10 +54,6 @@ class SavedNewsFragment : Fragment(), ItemClickListener {
         setUpRecyclerView()
         viewModel.allDataInLocal.observe(viewLifecycleOwner) {
             list-> adapter.setData(list)
-            Log.w("TEJAS", "size of list is: ${list.size}")
-            for (article in list) {
-                Log.w("TEJAS", "${article.url} ${article.id} ${article.author}")
-            }
         }
     }
 

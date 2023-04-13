@@ -29,18 +29,14 @@ class ArticleFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.w("TEJAS", "onCreate ArticleFragment")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.w(TAG, "Article Fragment Reached")
         viewModel=(activity as MainActivity).viewModel
-        Log.w(TAG, "viewModel Done")
         _binding=FragmentArticleBinding.inflate(inflater, container, false)
-        Log.w(TAG, "binding done")
         return binding.root
     }
 
