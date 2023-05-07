@@ -19,6 +19,7 @@ import com.example.news.Fragments.SavedNewsFragmentDirections
 import com.example.news.Fragments.SearchNewsFragmentDirections
 import com.example.news.ItemClickListener
 import com.example.news.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapter<NewsAdapter.ArticleViewHolder>() {
 
@@ -29,6 +30,7 @@ class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapte
         val title: TextView=view.findViewById(R.id.tvTitle)
         val image: ImageView=view.findViewById(R.id.ivArticleImage)
         val publishedAt: TextView=view.findViewById(R.id.tvPublishedAt)
+        val savebtn: FloatingActionButton=view.findViewById(R.id.saveButton)
     }
 
 
@@ -70,10 +72,14 @@ class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapte
             holder.publishedAt.text = article.publishedAt
         //}
 
+        holder.savebtn.setOnClickListener {
+            itemClickListener.onSaveButtonClicked(it, article)
+        }
         holder.itemView.setOnClickListener {
             Log.w("TEJAS", "Item Clicked")
             itemClickListener.onItemClick(it, article)
         }
+
     }
 
 

@@ -70,6 +70,10 @@ class SavedNewsFragment : Fragment(), ItemClickListener {
         Log.w("TEJAS", "Click Received BreakingNews")
         Log.w("TEJAS", "action initialised savedNews")
         viewModel.setArticle(article)
-        (activity as MainActivity).moveToArticleFragment()
+
+    }
+
+    override fun onSaveButtonClicked(view: View, article: Article) {
+        viewModel.deleteFromDatabase(article)
     }
 }

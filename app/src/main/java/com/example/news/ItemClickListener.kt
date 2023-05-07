@@ -5,4 +5,6 @@ import com.example.news.DataModel.Article
 
 interface ItemClickListener {
     fun onItemClick(view: View, article: Article)
+
+    fun onSaveButtonClicked(view: View, article: Article)
 }

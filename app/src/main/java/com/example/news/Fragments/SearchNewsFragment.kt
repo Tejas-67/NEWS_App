@@ -118,6 +118,8 @@ class SearchNewsFragment : Fragment(), ItemClickListener {
 
     override fun onItemClick(view: View, article: Article) {
         viewModel.setArticle(article)
-        (activity as MainActivity).moveToArticleFragment()
+    }
+
+    override fun onSaveButtonClicked(view: View, article: Article) {
     }
 }

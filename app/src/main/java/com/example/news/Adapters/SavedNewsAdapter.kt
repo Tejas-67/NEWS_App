@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.news.DataModel.Article
 import com.example.news.ItemClickListener
 import com.example.news.R
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class SavedNewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapter<SavedNewsAdapter.ArticleViewHolder>() {
     private var list : List<Article> = emptyList<Article>()
@@ -26,6 +27,7 @@ class SavedNewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.A
         val title: TextView =view.findViewById(R.id.tvTitle)
         val image: ImageView =view.findViewById(R.id.ivArticleImage)
         val publishedAt: TextView =view.findViewById(R.id.tvPublishedAt)
+        val savebtn: FloatingActionButton=view.findViewById(R.id.saveButton)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ArticleViewHolder {
@@ -38,14 +40,16 @@ class SavedNewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.A
 
     override fun onBindViewHolder(holder: ArticleViewHolder, position: Int) {
         val article = list[position]
-
+        holder.savebtn.setImageResource(R.drawable.ic_delete)
         Glide.with(holder.itemView.context).load(article.urlToImage).into(holder.image)
-        holder.source.text = article.source.name
+        if(article.source!=null)  holder.source.text = article.source.name
         holder.title.text = article.title
         holder.desc.text = article.description
         holder.publishedAt.text = article.publishedAt
 
-
+        holder.savebtn.setOnClickListener {
+            itemClickListener.onSaveButtonClicked(it, article)
+        }
         holder.itemView.setOnClickListener {
             itemClickListener.onItemClick(it, article)
         }

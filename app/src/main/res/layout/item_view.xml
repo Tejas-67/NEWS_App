@@ -22,6 +22,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveButton"
+        android:layout_width="40sp"
+        app:fabCustomSize="40sp"
+
+        android:layout_height="40sp"
+        android:alpha="40"
+        android:backgroundTint="@color/faded_blue"
+        android:src="@drawable/ic_favorite"
+        app:layout_constraintBottom_toBottomOf="@+id/ivArticleImage"
+        app:layout_constraintEnd_toEndOf="@+id/ivArticleImage"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="@+id/ivArticleImage"
+        app:layout_constraintTop_toTopOf="@+id/ivArticleImage"
+        app:layout_constraintVertical_bias="1.0" />
+
     <TextView
         android:id="@+id/tvTitle"
         style="@style/TextAppearance.MaterialComponents.Headline6"

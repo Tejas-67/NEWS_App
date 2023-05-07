@@ -14,9 +14,7 @@ class NewsRepository(val db: ArticleDatabase){
     val readAllData: LiveData<List<Article>> = dao.getAllArticles()
 
     suspend fun addToLocal(article: Article){
-        Log.w("TEJAS", "repo intitiating insert")
         dao.insert(article)
-        Log.w("TEJAS", "repo insert done")
     }
 
     suspend fun deleteFromLocal(article: Article){

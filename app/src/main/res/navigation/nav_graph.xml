@@ -10,6 +10,11 @@
         android:name="com.example.news.Fragments.ArticleFragment"
         android:label="fragment_article"
         tools:layout="@layout/fragment_article" >
+
+        <argument
+            android:name="article"
+            app:argType="com.example.news.DataModel.Article" />
+
     </fragment>
     <fragment
         android:id="@+id/breakingNewsFragment"

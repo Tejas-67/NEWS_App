@@ -18,23 +18,26 @@ import com.example.news.UI.NewsViewModel
 import com.example.news.databinding.FragmentArticleBinding
 private const val TAG="TEJAS"
 class ArticleFragment : Fragment() {
-
     private lateinit var args: NavArgs
-
-
      private var _binding: FragmentArticleBinding?=null
      private val binding get()=_binding!!
      private lateinit var viewModel: NewsViewModel
-     private var article: Article?=null
+     private lateinit var article: Article
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.w("TEJAS", "ArticleF onCreate")
+        arguments.let {
+            article= it?.getParcelable("article")!!
+        }
+//        Log.w("TEJAS", "article: ${articleUrl}")
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.w("TEJAS", "ArticleF onCreateView!")
         viewModel=(activity as MainActivity).viewModel
         _binding=FragmentArticleBinding.inflate(inflater, container, false)
         return binding.root
@@ -42,16 +45,7 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        article=viewModel.currentArticle
-        binding.webView.loadUrl(article!!.url)
 
-        binding.fab.setOnClickListener{
-            if(article==null) Toast.makeText(requireContext(), "Couldn't Save News!!", Toast.LENGTH_SHORT).show()
-            else {
-                viewModel.addToLocalDataBase(article!!)
-                Toast.makeText(requireContext(), "News Saved Succesfully", Toast.LENGTH_SHORT).show()
-                Log.w(TAG, "Added Successfully to Room")
-            }
-        }
+        binding.webView.loadUrl(article.url!!)
     }
 }

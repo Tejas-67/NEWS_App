@@ -6,8 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.news.API.Resource
@@ -276,7 +278,12 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
 
     override fun onItemClick(view: View, article: Article) {
-        viewModel.setArticle(article)
-        (activity as MainActivity).moveToArticleFragment()
+        val action=BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article)
+        findNavController().navigate(action)
+    }
+
+    override fun onSaveButtonClicked(view: View, article: Article) {
+        viewModel.addToLocalDataBase(article)
+        Toast.makeText(requireContext(), "News saved succesfully!", Toast.LENGTH_SHORT).show()
     }
 }
