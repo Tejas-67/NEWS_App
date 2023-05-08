@@ -26,11 +26,9 @@ class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapte
 
     class ArticleViewHolder(val view: View): RecyclerView.ViewHolder(view){
         val source: TextView=view.findViewById(R.id.tvSource)
-        val desc: TextView=view.findViewById(R.id.tvDescription)
         val title: TextView=view.findViewById(R.id.tvTitle)
         val image: ImageView=view.findViewById(R.id.ivArticleImage)
-        val publishedAt: TextView=view.findViewById(R.id.tvPublishedAt)
-        val savebtn: FloatingActionButton=view.findViewById(R.id.saveButton)
+        val savebtn: ImageView =view.findViewById(R.id.saveButton)
     }
 
 
@@ -68,8 +66,8 @@ class NewsAdapter(val itemClickListener: ItemClickListener): RecyclerView.Adapte
             if(article.author!=null) holder.source.text = "By ${article.author}."
             else holder.source.text= "By unknown."
             holder.title.text = article.title
-            holder.desc.text = article.description
-            holder.publishedAt.text = article.publishedAt
+//            holder.desc.text = article.description
+//            holder.publishedAt.text = article.publishedAt
         //}
 
         holder.savebtn.setOnClickListener {
