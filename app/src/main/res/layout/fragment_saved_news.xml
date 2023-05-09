@@ -12,9 +12,13 @@
         android:layout_height="wrap_content"
         android:text="@string/saved_news"
         android:padding="4sp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/faded_blue"
         android:textFontWeight="500"
-        android:fontFamily="sans-serif-smallcaps"
-        style="@style/TextAppearance.Material3.BodyLarge"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingBottom="8dp"
         android:textSize="30sp"/>
 
     <androidx.recyclerview.widget.RecyclerView

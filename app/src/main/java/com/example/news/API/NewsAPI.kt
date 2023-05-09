@@ -15,7 +15,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/everything")
@@ -25,7 +25,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -37,7 +37,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -49,7 +49,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -61,7 +61,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -73,7 +73,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
     @GET("v2/top-headlines")
@@ -85,7 +85,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
 
@@ -98,7 +98,7 @@ interface NewsAPI {
         @Query("page")
         pageNumber: Int=1,
         @Query("apiKey")
-        apiKey:String="a7049628798b4fe2875ca95af30922d3"
+        apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
 
 

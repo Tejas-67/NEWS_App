@@ -1,5 +1,8 @@
 package com.example.news.Fragments
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -20,6 +23,7 @@ import com.example.news.ItemClickListener
 import com.example.news.R
 import com.example.news.UI.NewsViewModel
 import com.example.news.databinding.FragmentBreakingNewsBinding
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 private const val ARG_PARAM1 = "param1"
@@ -37,9 +41,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
+    //    checkConnection()
     }
 
     override fun onCreateView(
@@ -212,6 +214,16 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
             })
         }
 
+        binding.searchNewsIv.setOnClickListener {
+            val action=BreakingNewsFragmentDirections.actionBreakingNewsFragmentToSearchNewsFragment()
+            findNavController().navigate(action)
+        }
+
+        binding.viewSavedButton.setOnClickListener {
+            val action=BreakingNewsFragmentDirections.actionBreakingNewsFragmentToSavedNewsFragment()
+            findNavController().navigate(action)
+        }
+
         //ENTERTAINMENT
         binding.entertainment.setOnClickListener {
             //binding.entertainment.setChipBackgroundColorResource(R.color.faded_blue)
@@ -249,7 +261,8 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                 is Resource.Error->{
                     hideProgressBar()
                     response.message?.let{message->
-                        Log.w("NEWS", "Error in fetching data")
+                        Log.w("NEWS", "Error in fetching data, error: ${response.message}")
+
                     }
                 }
                 is Resource.Loading-> {
@@ -275,7 +288,22 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
         }
     }
 
+    private fun checkConnection(){
+        if(!isNetworkAvailable(requireContext())){
+            val builder= MaterialAlertDialogBuilder(requireContext())
+            builder.setTitle("Something went wrong")
+                .setMessage("We're having issues loading this page.")
+                .setPositiveButton("Try Again"){_,_-> checkConnection()}
+                .setNegativeButton("Exit"){_, _ -> activity?.finish()}
+        }
+    }
 
+    private fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
+        return networkCapabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+    }
 
     override fun onItemClick(view: View, article: Article) {
         val action=BreakingNewsFragmentDirections.actionBreakingNewsFragmentToArticleFragment(article)

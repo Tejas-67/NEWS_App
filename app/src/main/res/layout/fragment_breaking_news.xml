@@ -11,19 +11,51 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/TextAppearance.Material3.BodyLarge"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
-        android:layout_marginLeft="4dp"
-        android:fontFamily="sans-serif-smallcaps"
-        android:text="@string/breaking_news"
+        android:fontFamily="sans-serif-condensed"
+        android:paddingBottom="8dp"
+        android:text="NewsFeed"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="@color/faded_blue"
         android:textFontWeight="500"
-        android:textSize="25sp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/search_news_iv"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="10.5dp"
+        android:layout_marginRight="12dp"
+        android:clickable="true"
+        android:src="@drawable/ic_search_news"
+        app:layout_constraintBottom_toTopOf="@id/categories"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toRightOf="@id/textView"
+        app:layout_constraintRight_toLeftOf="@id/view_saved_button"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/view_saved_button"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="10.5dp"
+        android:layout_marginRight="20dp"
+        android:clickable="true"
+        android:src="@drawable/ic_bookmark_better"
+        app:layout_constraintBottom_toTopOf="@id/categories"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <HorizontalScrollView
         android:id="@+id/categories"
@@ -100,12 +132,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvBreakingNews"
         android:layout_width="match_parent"
-        app:layout_constrainedHeight="true"
         android:layout_height="match_parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constrainedHeight="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="10.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/categories"
         app:layout_constraintVertical_bias="0.0" />
