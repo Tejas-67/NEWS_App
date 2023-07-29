@@ -9,12 +9,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.news.API.Resource
 import com.example.news.Activities.MainActivity
 import com.example.news.Adapters.NewsAdapter
@@ -22,6 +24,7 @@ import com.example.news.DataModel.Article
 import com.example.news.ItemClickListener
 import com.example.news.R
 import com.example.news.UI.NewsViewModel
+import com.example.news.Utils.Constants
 import com.example.news.databinding.FragmentBreakingNewsBinding
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
@@ -38,6 +41,35 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
     private lateinit var newsAdapter: NewsAdapter
     private lateinit var viewModel: NewsViewModel
     private lateinit var listener: ItemClickListener
+    var isLoading = false
+    var isLastPage = false
+    var isScrolling = false
+    val scrollListener = object: RecyclerView.OnScrollListener(){
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+            if(newState==AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL) isScrolling=true
+        }
+
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val layoutManager= recyclerView.layoutManager as LinearLayoutManager
+            val firstVisibleItemPosition = layoutManager.findFirstVisibleItemPosition()
+            val visibleItemCount=layoutManager.childCount
+            val totalItemCount=layoutManager.itemCount
+
+            val isNotLoadingAndNotLastPage=!isLoading && !isLastPage
+            val isAtLastItem = firstVisibleItemPosition+visibleItemCount>=totalItemCount
+            val isNotAtBeginning = firstVisibleItemPosition>=0
+            val isTotalMoreThanVisible = totalItemCount>=Constants.QUERY_PAGE_SIZE
+            val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning && isTotalMoreThanVisible && isScrolling
+            if(shouldPaginate){
+                viewModel.getBreakingNews()
+                isScrolling=false
+
+            }
+
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,13 +96,13 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //TECHNOLOGY
         binding.technology.setOnClickListener {
-//            binding.sports.setChipBackgroundColorResource(R.color.faded_blue)
             viewModel.technologyNews.observe(viewLifecycleOwner, Observer {
                     response->
                 when(response){
                     is Resource.Success -> {
                         hideProgressBar()
-                        response.data?.let{newsResponse ->
+                        response.data?.let{
+                                newsResponse ->
                             newsAdapter.differ.submitList(newsResponse.articles)
                         }
                     }
@@ -174,6 +206,8 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.data?.let{newsResponse ->
                             newsAdapter.differ.submitList(newsResponse.articles)
+                            val totalPages = newsResponse.totalResults / Constants.QUERY_PAGE_SIZE +2
+                            isLastPage=viewModel.breakingNewsPage==totalPages
                         }
                     }
                     is Resource.Error->{
@@ -255,7 +289,9 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                 is Resource.Success -> {
                     hideProgressBar()
                     response.data?.let{newsResponse ->
-                        newsAdapter.differ.submitList(newsResponse.articles)
+                        newsAdapter.differ.submitList(newsResponse.articles.toList())
+                        val totalPages=newsResponse.totalResults / (Constants.QUERY_PAGE_SIZE+2)
+                        isLastPage=(viewModel.breakingNewsPage==totalPages)
                     }
                 }
                 is Resource.Error->{
@@ -274,9 +310,11 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
     }
     private fun showProgressBar(){
+        isLoading=true
         binding.paginationProgressBar.visibility=View.VISIBLE
     }
     private fun hideProgressBar(){
+        isLoading=false
         binding.paginationProgressBar.visibility=View.INVISIBLE
     }
 
@@ -285,6 +323,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
         binding.rvBreakingNews.apply {
             adapter=newsAdapter
             layoutManager=LinearLayoutManager(activity)
+            addOnScrollListener(this@BreakingNewsFragment.scrollListener)
         }
     }
 

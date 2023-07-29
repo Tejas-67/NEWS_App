@@ -3,27 +3,33 @@ package com.example.news.Database
 import android.content.Context
 import androidx.room.*
 import com.example.news.DataModel.Article
+import com.example.news.DataModel.NewsResponse
+import com.example.news.DataModel.Source
 
-@Database(entities=[Article::class],version=1, exportSchema = false)
+@Database(entities = [Article::class, Source::class], version=1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class ArticleDatabase : RoomDatabase() {
+abstract class ArticleDatabase: RoomDatabase(){
 
-    abstract fun getArticleDao(): ArticleDao
+    abstract fun getDao(): ArticleDao
 
-    companion object {
+    companion object{
+
         @Volatile
-        private var INSTANCE: ArticleDatabase?=null
+        private var INSTANCE: ArticleDatabase? =null
+
         fun getDatabase(context: Context): ArticleDatabase{
             val tempInstance= INSTANCE
             if(tempInstance!=null) return tempInstance
-            synchronized(this){
-                val instance=Room.databaseBuilder(context.applicationContext, ArticleDatabase::class.java,"article_db.db")
-                    .allowMainThreadQueries().build()
 
-                INSTANCE=instance
-                return instance
-            }
+            val instance = Room.databaseBuilder(context.applicationContext, ArticleDatabase::class.java, "article.db")
+                .allowMainThreadQueries().build()
+
+            INSTANCE=instance
+            return instance
+
         }
+    }
+}
 //        private var instance: ArticleDatabase? = null
 //        private val LOCK = Any()
 //
@@ -37,5 +43,4 @@ abstract class ArticleDatabase : RoomDatabase() {
 //                ArticleDatabase::class.java,
 //                "article_db.db"
 //            ).build()
-    }
-}
+

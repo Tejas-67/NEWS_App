@@ -6,12 +6,16 @@ import com.example.news.DataModel.Article
 
 @Dao
 interface ArticleDao {
-    @Insert(onConflict=OnConflictStrategy.ABORT)
-    fun insert(article: Article)
 
     @Query("SELECT * FROM articles")
     fun getAllArticles(): LiveData<List<Article>>
 
+    @Insert
+    fun insertArticle(article: Article)
+
     @Delete
     fun deleteArticle(article: Article)
+
+    @Update
+    fun updateArticle(article: Article)
 }

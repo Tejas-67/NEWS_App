@@ -23,29 +23,46 @@ class NewsViewModel(
 ) : ViewModel() {
 
     private var _currentArticle: Article?=null
-    val currentArticle get()=_currentArticle!!
 
     var allDataInLocal: LiveData<List<Article>> = newsRepository.readAllData
-
-
+    var countryCode = "in"
     fun setArticle(article: Article) {
         _currentArticle=article
     }
     val breakingNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var breakingNewsPage = 1
+    var breakingNewsResponse: NewsResponse? = null
 
     val businessNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var businessNewsPage=1
+    var businessNewsResponse : NewsResponse? = null
+
     val entertainmentNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var entertainmentNewsPage = 1
+    var entertainmentNewsResponse : NewsResponse? = null
+
     val sportsNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var sportsNewsPage=1
+    var sportsNewsResponse : NewsResponse? = null
+
     val healthNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var healthNewsPage=1
+    var healthNewsResponse: NewsResponse? = null
+
     val scienceNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var scienceNewsPage=1
+    var scienceNewsResponse: NewsResponse? = null
+
     val technologyNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
+    var technologyNewsPage=1
+    var technologyNewsResponse: NewsResponse? = null
 
     val searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
+    var searchNewsResponse: NewsResponse? = null
 
     init {
-        getBreakingNews("in")
+        getBreakingNews()
         getEntertainmentNews()
         getBusinessNews()
         getScienceNews()
@@ -71,59 +88,178 @@ class NewsViewModel(
         Log.w("TEJAS", "viewModel Insert Done")
     }
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+    fun getBreakingNews() = viewModelScope.launch {
         breakingNews.postValue(Resource.Loading())
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
-        breakingNews.postValue(handleNewsResponse(response))
+        breakingNews.postValue(handleBreakingNewsResponse(response))
     }
     fun getEntertainmentNews() = viewModelScope.launch {
         entertainmentNews.postValue(Resource.Loading())
-        val response = newsRepository.getEntertainmentNews()
-        entertainmentNews.postValue(handleNewsResponse(response))
+        val response = newsRepository.getEntertainmentNews(countryCode, entertainmentNewsPage)
+        entertainmentNews.postValue(handleEntertainmentNewsResponse(response))
     }
 
     fun getBusinessNews()= viewModelScope.launch{
         businessNews.postValue(Resource.Loading())
-        val response = newsRepository.getBusinessNews()
-        businessNews.postValue(handleNewsResponse(response))
+        val response = newsRepository.getBusinessNews(countryCode, businessNewsPage)
+        businessNews.postValue(handleBusinessNewsResponse(response))
     }
 
     fun getSportsNews()= viewModelScope.launch{
         sportsNews.postValue(Resource.Loading())
-        val response=newsRepository.getSportsNews()
-        sportsNews.postValue(handleNewsResponse(response))
+        val response=newsRepository.getSportsNews(countryCode, sportsNewsPage)
+        sportsNews.postValue(handleSportsNewsResponse(response))
     }
 
     fun getHealthNews()= viewModelScope.launch{
         healthNews.postValue(Resource.Loading())
-        val response=newsRepository.getHealthNews()
-        healthNews.postValue(handleNewsResponse(response))
+        val response=newsRepository.getHealthNews(countryCode, healthNewsPage)
+        healthNews.postValue(handleHealthNewsResponse(response))
     }
 
     fun getTechnologyNews()= viewModelScope.launch{
         technologyNews.postValue(Resource.Loading())
-        val response=newsRepository.getTechnologyNews()
-        technologyNews.postValue(handleNewsResponse(response))
+        val response=newsRepository.getTechnologyNews(countryCode, technologyNewsPage)
+        technologyNews.postValue(handleTechnologyNewsResponse(response))
     }
 
     fun getScienceNews()= viewModelScope.launch{
         scienceNews.postValue(Resource.Loading())
-        val response=newsRepository.getScienceNews()
-        scienceNews.postValue(handleNewsResponse(response))
+        val response=newsRepository.getScienceNews(countryCode, scienceNewsPage)
+        scienceNews.postValue(handleScienceNewsResponse(response))
     }
-    private fun handleNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+    private fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
         if(response.isSuccessful) {
             response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
+                breakingNewsPage++
+                if(breakingNewsResponse==null) breakingNewsResponse=resultResponse
+                else {
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(breakingNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleEntertainmentNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                entertainmentNewsPage++
+                if(entertainmentNewsResponse==null) entertainmentNewsResponse=resultResponse
+                else {
+                    val oldArticles = entertainmentNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(entertainmentNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleSportsNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                sportsNewsPage++
+                if(sportsNewsResponse==null) sportsNewsResponse=resultResponse
+                else {
+                    val oldArticles = sportsNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(sportsNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleTechnologyNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                technologyNewsPage++
+                if(technologyNewsResponse==null) technologyNewsResponse=resultResponse
+                else {
+                    val oldArticles = breakingNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(technologyNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleBusinessNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                businessNewsPage++
+                if(businessNewsResponse==null) businessNewsResponse=resultResponse
+                else {
+                    val oldArticles = businessNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(businessNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleScienceNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {
+        if(response.isSuccessful) {
+            response.body()?.let { resultResponse ->
+                scienceNewsPage++
+                if(scienceNewsResponse==null) scienceNewsResponse=resultResponse
+                else {
+                    val oldArticles = scienceNewsResponse?.articles
+                    val newArticles = resultResponse.articles
+                    oldArticles?.addAll(newArticles)
+
+                }
+                return Resource.Success(scienceNewsResponse?:resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+    private fun handleHealthNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let{
+                healthNewsPage++
+                if(healthNewsResponse==null) healthNewsResponse=it
+                else{
+                    val oldArticles = scienceNewsResponse?.articles
+                    val newArticles= it.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(healthNewsResponse?:it)
             }
         }
         return Resource.Error(response.message())
     }
 
+
     fun searchNews(searchQuery: String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.searchNews(searchQuery, searchNewsPage)
-        searchNews.postValue(handleNewsResponse(response))
+        searchNews.postValue(handleSearchNewsResponse(response))
+    }
+    private fun handleSearchNewsResponse(response: Response<NewsResponse>): Resource<NewsResponse>{
+        if(response.isSuccessful){
+            response.body()?.let{
+                searchNewsPage++
+                if(searchNewsResponse==null) searchNewsResponse=it
+                else{
+                    val oldArticles=searchNewsResponse?.articles
+                    val newArticles=it.articles
+                    oldArticles?.addAll(newArticles)
+                }
+                return Resource.Success(searchNewsResponse?:it)
+            }
+        }
+        return Resource.Error(response.message())
     }
 
 

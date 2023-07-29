@@ -5,6 +5,7 @@
         <item name="colorPrimaryDark">@color/silver_but_not_silver</item>
         <item name="colorAccent">@color/slate_gray</item>
     </style>
+
     <style name="roungImageView" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">12sp</item>

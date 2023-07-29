@@ -12,6 +12,7 @@ import android.util.Log
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
 
         _binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val navHostFragment=supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
 
         navController=navHostFragment.navController

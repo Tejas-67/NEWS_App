@@ -13,9 +13,18 @@ interface NewsAPI {
         @Query("country")
         countryCode: String="us",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
+    ): Response<NewsResponse>
+    @GET("v2/top-headlines")
+    suspend fun get(
+        @Query("country")
+        countryCode: String,
+        @Query("apiKey")
+        apiKey: String,
+        @Query("page")
+        page: Int
     ): Response<NewsResponse>
 
     @GET("v2/everything")
@@ -23,7 +32,7 @@ interface NewsAPI {
         @Query("q")
         searchQuery: String,
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -35,7 +44,7 @@ interface NewsAPI {
         @Query("category")
         category: String="business",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -47,7 +56,7 @@ interface NewsAPI {
         @Query("category")
         category: String="sports",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -59,7 +68,7 @@ interface NewsAPI {
         @Query("category")
         category: String="entertainment",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -71,7 +80,7 @@ interface NewsAPI {
         @Query("category")
         category: String="health",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -83,7 +92,7 @@ interface NewsAPI {
         @Query("category")
         category: String="science",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>
@@ -96,7 +105,7 @@ interface NewsAPI {
         @Query("category")
         category: String="technology",
         @Query("page")
-        pageNumber: Int=1,
+        pageNumber: Int,
         @Query("apiKey")
         apiKey:String="21bee3506500443ea55b3e9ffb88dbee"
     ): Response<NewsResponse>

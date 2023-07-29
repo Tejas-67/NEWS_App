@@ -12,6 +12,7 @@ class RetrofitInstance {
             val logging = HttpLoggingInterceptor()
             logging.setLevel(HttpLoggingInterceptor.Level.BODY)
             val client = OkHttpClient.Builder().addInterceptor(logging).build()
+
             Retrofit.Builder().baseUrl("https://newsapi.org")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
@@ -21,5 +22,6 @@ class RetrofitInstance {
         val api by lazy {
             retrofit.create(NewsAPI::class.java)
         }
+
     }
 }
