@@ -87,14 +87,9 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.w("TEJAS", "2")
         viewModel=(activity as MainActivity).viewModel
         showProgressBar()
-        Log.w("TEJAS", "3")
         setUpRecyclerView()
-        Log.w("TEJAS", "4")
-
-        //TECHNOLOGY
         binding.technology.setOnClickListener {
             viewModel.technologyNews.observe(viewLifecycleOwner, Observer {
                     response->
@@ -110,6 +105,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching Technology News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -121,8 +117,6 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //SCIENCE
         binding.science.setOnClickListener {
-//            binding.sports.setChipBackgroundColorResource(R.color.faded_blue)
-
             viewModel.scienceNews.observe(viewLifecycleOwner, Observer {
                     response->
                 when(response){
@@ -136,6 +130,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching Science News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -147,7 +142,6 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //HEALTH
         binding.health.setOnClickListener {
-//            binding.sports.setChipBackgroundColorResource(R.color.faded_blue)
             viewModel.healthNews.observe(viewLifecycleOwner, Observer {
                     response->
                 when(response){
@@ -161,6 +155,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching Health News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -173,7 +168,6 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //BUSINESS
         binding.business.setOnClickListener {
-//            binding.sports.setChipBackgroundColorResource(R.color.faded_blue)
             viewModel.businessNews.observe(viewLifecycleOwner, Observer {
                     response->
                 when(response){
@@ -187,6 +181,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching Business News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -198,7 +193,6 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
 
         //ALL
         binding.all.setOnClickListener {
-//            binding.sports.setChipBackgroundColorResource(R.color.faded_blue)
             viewModel.breakingNews.observe(viewLifecycleOwner, Observer {
                     response->
                 when(response){
@@ -214,6 +208,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -239,6 +234,7 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                         hideProgressBar()
                         response.message?.let{message->
                             Log.w("NEWS", "Error in fetching Sports News")
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -273,7 +269,8 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                     is Resource.Error->{
                         hideProgressBar()
                         response.message?.let{message->
-                            Log.w("NEWS", "Error in fetching Entertainment News")
+                            Log.w("NEWS", message)
+                            showToast(message)
                         }
                     }
                     is Resource.Loading-> {
@@ -297,7 +294,8 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
                 is Resource.Error->{
                     hideProgressBar()
                     response.message?.let{message->
-                        Log.w("NEWS", "Error in fetching data, error: ${response.message}")
+                        Log.w("NEWS",  message)
+                        showToast(message)
 
                     }
                 }
@@ -308,6 +306,9 @@ class BreakingNewsFragment : Fragment(), ItemClickListener {
             }
         })
 
+    }
+    private fun showToast(message: String){
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
     private fun showProgressBar(){
         isLoading=true

@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity() {
         //Always initialise viewModel before inflating layout, because as soon as mainactivity layout is inflated the home fragment breakingnewsfragment will try to access the
             //viewmodel from mainactivity!
         val repo = NewsRepository(ArticleDatabase.getDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(repo)
+        val viewModelProviderFactory = NewsViewModelProviderFactory(application, repo)
         viewModel=ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
         Log.w("TEJAS", "MainActivity")
         supportActionBar?.hide()
